@@ -23,6 +23,7 @@
 
     "log.mining.strategy": "online_catalog",
     "log.mining.query.filter.mode": "in",
+    "internal.log.mining.use.cte.query": "true",
     "log.mining.batch.size.min": "1000",
     "log.mining.batch.size.max": "10000",
     "log.mining.batch.size.default": "5000",
