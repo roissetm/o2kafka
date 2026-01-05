@@ -1,0 +1,55 @@
+{
+  "name": "oracle-ecom-connector",
+  "config": {
+    "connector.class": "io.debezium.connector.oracle.OracleConnector",
+    "tasks.max": "1",
+
+    "database.hostname": "oracle",
+    "database.port": "1521",
+    "database.user": "c##debezium",
+    "database.password": "dbz_password",
+    "database.dbname": "XE",
+    "database.pdb.name": "XEPDB1",
+
+    "topic.prefix": "o2k",
+    "schema.include.list": "ECOM",
+    "table.include.list": "ECOM.CATEGORIES,ECOM.PRODUCTS,ECOM.INVENTORY,ECOM.CUSTOMERS,ECOM.ORDERS,ECOM.ORDER_ITEMS,ECOM.PAYMENTS,ECOM.SHIPMENTS,ECOM.SHIPMENT_ITEMS,ECOM.RETURNS",
+
+    "schema.history.internal.kafka.bootstrap.servers": "kafka:9092",
+    "schema.history.internal.kafka.topic": "o2k.schema-history",
+
+    "provide.transaction.metadata": "true",
+    "tombstones.on.delete": "false",
+
+    "log.mining.strategy": "online_catalog",
+    "log.mining.query.filter.mode": "in",
+    "log.mining.batch.size.min": "1000",
+    "log.mining.batch.size.max": "10000",
+    "log.mining.batch.size.default": "5000",
+    "log.mining.sleep.time.min.ms": "0",
+    "log.mining.sleep.time.max.ms": "3000",
+    "log.mining.sleep.time.default.ms": "1000",
+    "log.mining.sleep.time.increment.ms": "200",
+
+    "snapshot.mode": "initial",
+    "snapshot.locking.mode": "none",
+
+    "decimal.handling.mode": "double",
+    "time.precision.mode": "connect",
+
+    "heartbeat.interval.ms": "10000",
+    "poll.interval.ms": "1000",
+
+    "errors.log.enable": "true",
+    "errors.log.include.messages": "true",
+    "errors.tolerance": "none",
+
+    "key.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "key.converter.schemas.enable": "false",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": "true",
+
+    "signal.enabled.channels": "source",
+    "incremental.snapshot.chunk.size": "1024"
+  }
+}

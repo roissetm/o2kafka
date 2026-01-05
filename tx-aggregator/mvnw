@@ -1,0 +1,70 @@
+#!/bin/sh
+# Maven Wrapper script
+# Downloads and runs Maven with the project's expected version
+
+set -e
+
+# Determine script location
+if [ -z "$MAVEN_PROJECTBASEDIR" ]; then
+  MAVEN_PROJECTBASEDIR="$(cd "$(dirname "$0")" && pwd -P)"
+  export MAVEN_PROJECTBASEDIR
+fi
+
+WRAPPER_JAR="${MAVEN_PROJECTBASEDIR}/.mvn/wrapper/maven-wrapper.jar"
+WRAPPER_PROPERTIES="${MAVEN_PROJECTBASEDIR}/.mvn/wrapper/maven-wrapper.properties"
+
+# Download wrapper jar if not present
+if [ ! -f "$WRAPPER_JAR" ]; then
+  if [ -f "$WRAPPER_PROPERTIES" ]; then
+    WRAPPER_URL=$(grep 'wrapperUrl' "$WRAPPER_PROPERTIES" | cut -d'=' -f2-)
+    echo "Downloading Maven Wrapper from $WRAPPER_URL"
+
+    if command -v wget > /dev/null; then
+      wget -q -O "$WRAPPER_JAR" "$WRAPPER_URL"
+    elif command -v curl > /dev/null; then
+      curl -sL -o "$WRAPPER_JAR" "$WRAPPER_URL"
+    else
+      echo "Neither wget nor curl found. Cannot download Maven wrapper."
+      exit 1
+    fi
+  fi
+fi
+
+# Get distribution URL
+if [ -f "$WRAPPER_PROPERTIES" ]; then
+  MAVEN_DIST_URL=$(grep 'distributionUrl' "$WRAPPER_PROPERTIES" | cut -d'=' -f2-)
+fi
+
+# Set up Maven home
+MAVEN_USER_HOME="${MAVEN_USER_HOME:-${HOME}/.m2}"
+MAVEN_HOME="${MAVEN_USER_HOME}/wrapper/dists/apache-maven-3.9.9"
+
+# Download Maven if not present
+if [ ! -d "$MAVEN_HOME" ]; then
+  echo "Downloading Maven from $MAVEN_DIST_URL"
+  mkdir -p "$MAVEN_HOME"
+  MAVEN_ZIP="${MAVEN_USER_HOME}/wrapper/maven-3.9.9.zip"
+
+  if command -v wget > /dev/null; then
+    wget -q -O "$MAVEN_ZIP" "$MAVEN_DIST_URL"
+  elif command -v curl > /dev/null; then
+    curl -sL -o "$MAVEN_ZIP" "$MAVEN_DIST_URL"
+  fi
+
+  unzip -q "$MAVEN_ZIP" -d "${MAVEN_USER_HOME}/wrapper/dists/"
+  rm "$MAVEN_ZIP"
+fi
+
+# Find Maven executable
+MAVEN_CMD="${MAVEN_HOME}/bin/mvn"
+if [ ! -x "$MAVEN_CMD" ]; then
+  MAVEN_CMD=$(find "${MAVEN_USER_HOME}/wrapper/dists" -name mvn -type f 2>/dev/null | head -1)
+fi
+
+if [ -z "$MAVEN_CMD" ] || [ ! -x "$MAVEN_CMD" ]; then
+  echo "Maven executable not found"
+  exit 1
+fi
+
+# Execute Maven
+exec "$MAVEN_CMD" "$@"
