@@ -1,0 +1,51 @@
+# Build output
+target/
+build/
+*.class
+*.jar
+*.war
+*.ear
+
+# IDE
+.idea/
+*.iml
+.vscode/
+*.swp
+*.swo
+.project
+.classpath
+.settings/
+
+# Maven
+.mvn/wrapper/maven-wrapper.jar
+
+# Gradle
+.gradle/
+gradle/
+
+# Logs
+*.log
+logs/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment files with secrets
+.env.local
+.env.*.local
+
+# Docker volumes (local data)
+docker-data/
+
+# Test output
+test-output/
+surefire-reports/
+
+# Node (if any tooling)
+node_modules/
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
